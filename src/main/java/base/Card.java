@@ -1,6 +1,6 @@
-package model;
+package base;
 
-public class Card {
+public abstract class Card {
 
 	private Suit _suit;
 	private Rank _rank;
@@ -19,6 +19,8 @@ public class Card {
 	public Rank getRank() {
 		return _rank;
 	}
+
+	public abstract int getValue();
 
 	/* ----------------------------- toString ------------------------------ */
 	@Override
