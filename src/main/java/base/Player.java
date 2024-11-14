@@ -2,23 +2,23 @@ package base;
 
 public class Player<T extends Card> {
 	private Hand<T> hand;
-	private int score;
+	private int points;
 
 	public Player() {
 		hand = new Hand<>();
-		score = 0;
+		points = 0;
 	}
 
 	public Hand<T> getHand() {
 		return hand;
 	}
 
-	public int getScore() {
-		return score;
+	public int getPoints() {
+		return points;
 	}
 
-	public void addScore(int points) {
-		score += points;
+	public void addPoints(int points) {
+		points += points;
 	}
 
 	public void receiveCard(T card) {

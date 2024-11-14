@@ -25,6 +25,17 @@ public abstract class Deck<T extends Card> {
 		return hand;
 	}
 
+	public T dealOneCard() {
+		if (cards.isEmpty()) {
+			return null;
+		}
+		return cards.remove(0);
+	}
+
+	public void addCardToBottom(T card) {
+		cards.add(card);
+	}
+
 	public int getDeckSize() {
 		return cards.size();
 	}

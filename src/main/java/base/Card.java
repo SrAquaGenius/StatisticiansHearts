@@ -22,6 +22,10 @@ public abstract class Card {
 
 	public abstract int getValue();
 
+	public boolean equals(Rank rank, Suit suit) {
+		return _rank == rank && _suit == suit;  
+	}
+
 	/* ----------------------------- toString ------------------------------ */
 	@Override
 	public String toString() {
