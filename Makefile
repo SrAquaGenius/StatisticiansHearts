@@ -1,5 +1,11 @@
 comp:
-	@(javac -d out $(find src -name "*.java"))
+	@(mvn compile)
 
 run:
-	@(java -cp out game.Main)
+	@(mvn exec:java)
+
+run_d:
+	@(mvn exec:java -Ddebug)
+
+clean:
+	@(mvn clean package)
