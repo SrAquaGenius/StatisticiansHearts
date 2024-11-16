@@ -3,8 +3,8 @@ package base;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand<T extends Card> extends ArrayList<T> {
-	private List<T> cards;
+public class Hand<T extends Card> {
+    private List<T> cards;
 
     public Hand() {
         this.cards = new ArrayList<>();
@@ -16,13 +16,23 @@ public class Hand<T extends Card> extends ArrayList<T> {
     }
 
     // Adds a single card to the hand
-    public void add(T card) {
-        this.cards.add(card);
+    public boolean add(T card) {
+        return this.cards.add(card);  // Return boolean to match List behavior
     }
 
     // Removes a specific card from the hand
-    public boolean remove(T card) {
-        return this.cards.remove(card);
+    public T remove(int index) {
+		return cards.remove(index);
+	}
+
+    // Custom method to remove a specific card by rank and suit
+    public T removeCard(Rank rank, Suit suit) {
+        for (int c = 0; c < cards.size(); c++) {
+            if (cards.get(c).equals(rank, suit)) {
+                return cards.remove(c);
+            }
+        }
+        return null; // Return null if the card is not found
     }
 
     // Retrieves a card at a specific index
@@ -30,7 +40,7 @@ public class Hand<T extends Card> extends ArrayList<T> {
         return this.cards.get(index);
     }
 
-    // Gets all cards in the hand
+    // Gets all cards in the hand as a list
     public List<T> getCards() {
         return this.cards;
     }

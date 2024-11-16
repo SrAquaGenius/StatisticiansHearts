@@ -28,4 +28,8 @@ public class Player<T extends Card> {
 	public T playCard(int index) {
 		return hand.remove(index);
 	}
+
+	public T playCard(Rank rank, Suit suit) {
+		return hand.removeCard(rank, suit);
+	}
 }

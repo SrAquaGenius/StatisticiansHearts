@@ -25,7 +25,7 @@ public class HeartsPlayer extends Player<HeartsCard> {
 		collectedCards.clear();
 	}
 
-	public List<HeartsCard> getCollectedCards() {
+	public Hand<HeartsCard> getCollectedCards() {
 		return collectedCards;
 	}
 }
