@@ -10,4 +10,4 @@ run_d: comp
 	@(mvn exec:java -Ddebug)
 
 clean:
-	@(mvn clean package)
+	@(mvn clean)

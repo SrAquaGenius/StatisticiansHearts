@@ -1,6 +1,5 @@
 package hearts;
 
-import java.util.Comparator;
 import java.util.List;
 
 import base.Hand;
@@ -9,8 +8,8 @@ import base.Player;
 public class HeartsPlayer extends Player<HeartsCard> {
 	private Hand<HeartsCard> collectedCards;
 
-	public HeartsPlayer() {
-		super();
+	public HeartsPlayer(String name) {
+		super(name);
 		collectedCards = new Hand<HeartsCard>();
 	}
 

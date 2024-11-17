@@ -4,15 +4,21 @@ import java.util.Comparator;
 
 public class Player<T extends Card> {
 	private Hand<T> hand;
+	private String _name;
 	private int points;
 
-	public Player() {
+	public Player(String name) {
 		hand = new Hand<>();
+		_name = name;
 		points = 0;
 	}
 
 	public Hand<T> getHand() {
 		return hand;
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	public int getPoints() {
