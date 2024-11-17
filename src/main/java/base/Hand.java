@@ -1,6 +1,8 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Hand<T extends Card> {
@@ -55,6 +57,21 @@ public class Hand<T extends Card> {
         return this.cards.size();
     }
 
+	/** Sorts the hand using the provided comparator.
+     *  @param comparator the comparator to define the sorting order */
+    public void sort(Comparator<T> comparator) {
+        Collections.sort(cards, comparator);
+    }
+
+	public String display() {
+		String text = "[";
+		for (T t : cards) {
+			text += t.display() + " ";
+		}
+		return text += "]";
+	}
+
+	/* ----------------------------- toString ------------------------------ */
     @Override
     public String toString() {
         return cards.toString();

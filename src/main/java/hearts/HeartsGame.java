@@ -36,7 +36,7 @@ public class HeartsGame {
 		if (isGameFinished()) return;
 		resetDeck();
 		dealDeck();
-		// Give 3 cards to the next player
+		// TODO: Give 3 cards to the next player
 		setStartingPlayer();
 		while(deck.getDeckSize() - numPlayers >= 0) {
 			//playRound();
@@ -52,27 +52,18 @@ public class HeartsGame {
 	public void dealDeck() {
 		Debug.place();
 		int cardsPerPlayer = deck.getDeckSize() / players.size();
-		for (Player<HeartsCard> player : players) {
+		for (int p = 0; p < players.size(); p++) {
+			HeartsPlayer player = players.get(p);
 			player.getHand().addAll(deck.deal(cardsPerPlayer));
+			player.sortHand();
+			Debug.print("Player " + p + ": " + player.getHand().display());
 		}
 	}
 
+	/** Set who is the starting player */
 	private void setStartingPlayer() {
 		Debug.place();
-
-		int startingIndex = -1;
-		
-		// Search for the player who has the "2 of Clubs"
-		for (int i = 0; i < players.size(); i++) {
-			Player<HeartsCard> player = players.get(i);
-			for (HeartsCard card : player.getHand().getCards()) {
-				if (card.equals(Rank.TWO, Suit.CLUBS)) {
-					startingIndex = i;
-					break;
-				}
-			}
-			if (startingIndex != -1) break;  // Exit the outer loop if found
-		}
+		int startingIndex = searchStartingIndex();
 
 		// Rotate the players list if we found the starting player
 		if (startingIndex != -1) {
@@ -82,6 +73,20 @@ public class HeartsGame {
 		else {
 			System.out.println("2 of Clubs not found. Starting player not set.");
 		}
+	}
+
+	/** Search for the index of the player who has the "2 of Clubs" */
+	public int searchStartingIndex() {
+		Debug.place();
+		for (int i = 0; i < players.size(); i++) {
+			Player<HeartsCard> player = players.get(i);
+			for (HeartsCard card : player.getHand().getCards()) {
+				if (card.equals(Rank.TWO, Suit.CLUBS)) {
+					return i;
+				}
+			}
+		}
+		return -1;
 	}
 
 	public void playRound() {

@@ -1,10 +1,12 @@
+.PHONY: comp
+
 comp:
 	@(mvn compile)
 
-run:
+run: comp
 	@(mvn exec:java)
 
-run_d:
+run_d: comp
 	@(mvn exec:java -Ddebug)
 
 clean:

@@ -1,14 +1,14 @@
 package base;
 
-public abstract class Card {
+public class Card {
 
 	private Suit _suit;
 	private Rank _rank;
 
 	/* ---------------------------- Constructor ---------------------------- */
 	public Card(Suit suit, Rank rank) {
-		this._suit = suit;
-		this._rank = rank;
+		_suit = suit;
+		_rank = rank;
 	}
 
 	/* ----------- Getters, Setters and useful general functions ----------- */
@@ -20,15 +20,23 @@ public abstract class Card {
 		return _rank;
 	}
 
-	public abstract int getValue();
+	public int getOrder(RankOrder rankOrder) {
+        return rankOrder.getValue(_rank);
+    }
 
 	public boolean equals(Rank rank, Suit suit) {
 		return _rank == rank && _suit == suit;  
 	}
 
+
+	public String display() {
+		return _rank.display() + _suit.display();
+	}
+
 	/* ----------------------------- toString ------------------------------ */
 	@Override
 	public String toString() {
-		return _rank + " of " + _suit;
+		return display();
+		//return _rank + " of " + _suit;
 	}
 }

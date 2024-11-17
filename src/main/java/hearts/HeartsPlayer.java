@@ -1,5 +1,6 @@
 package hearts;
 
+import java.util.Comparator;
 import java.util.List;
 
 import base.Hand;
@@ -27,5 +28,9 @@ public class HeartsPlayer extends Player<HeartsCard> {
 
 	public Hand<HeartsCard> getCollectedCards() {
 		return collectedCards;
+	}
+
+	public void sortHand() {
+		super.sortHand(new HeartsCardComparator(new HeartsRankOrder()));
 	}
 }
