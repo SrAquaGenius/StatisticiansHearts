@@ -64,16 +64,7 @@ public class HeartsGame {
 	/** Set who is the starting player */
 	private void setStartingPlayer() {
 		Debug.place();
-		int startingIndex = searchStartingIndex();
-
-		// Rotate the players list if we found the starting player
-		if (startingIndex != -1) {
-			Collections.rotate(players, -startingIndex);
-			System.out.println("Starting player set: Player " + ((char) (startingIndex + 65)));
-		}
-		else {
-			System.out.println("2 of Clubs not found. Starting player not set.");
-		}
+		rotatePlayerList(searchStartingIndex());
 	}
 
 	/** Search for the index of the player who has the "2 of Clubs" */
@@ -88,6 +79,18 @@ public class HeartsGame {
 			}
 		}
 		return -1;
+	}
+
+	/** Rotate the players list given the index of the starting player */
+	private void rotatePlayerList(int startIndex) {
+		if (startIndex != -1) {
+			System.out.println("Starting player set: Player "
+				+ players.get(startIndex).getName());
+			Collections.rotate(players, -startIndex);
+		}
+		else {
+			System.out.println("2 of Clubs not found. Starting player not set.");
+		}
 	}
 
 	/* --------------------------------------------------------------------- */
