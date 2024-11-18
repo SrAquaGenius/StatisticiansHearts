@@ -46,4 +46,8 @@ public class Player<T extends Card> {
 	public void sortHand(Comparator<T> comparator) {
 		hand.sort(comparator);
 	}
+
+	public String display() {
+		return "Player " + _name;
+	}
 }

@@ -57,6 +57,10 @@ public class Hand<T extends Card> {
         return this.cards.size();
     }
 
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+
 	/** Sorts the hand using the provided comparator.
      *  @param comparator the comparator to define the sorting order */
     public void sort(Comparator<T> comparator) {

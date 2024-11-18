@@ -1,6 +1,5 @@
 package hearts;
 
-import base.Hand;
 import base.Player;
 import base.Rank;
 import base.Suit;
@@ -10,46 +9,48 @@ import utils.Debug;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner; 
 
 public class HeartsGame {
+
 	private HeartsDeck deck;
 	private List<HeartsPlayer> players;
-	private int numPlayers;
 
 	private int roundNumber = 0;
-
 	public int MAX_POINTS = 100;
 
-	private Scanner scanner;
-
+	/* ---------------------------- Constructor ---------------------------- */
 	public HeartsGame(int numPlayers) {
-		this.numPlayers = numPlayers;
-		players = new ArrayList<>();
+		players = new ArrayList<>(numPlayers);
 		for (int i = 0; i < numPlayers; i++) {
 			String name = "" + ((char) (65 + i));
 			players.add(new HeartsPlayer(name));
 		}
-		scanner = new Scanner(System.in);
 	}
 
+	/* ------------------------ Start Game Function ------------------------ */
 	public void startGame() {
-		if (isGameFinished()) return;
-		resetDeck();
-		dealDeck();
-		Debug.todoMsg("Give 3 cards to the next player");
-		setStartingPlayer();
-		while(players.get(0).getHand().size() > 0) {
-			playRound();
+
+		while (!isGameFinished()) {
+			resetDeck();
+			dealDeck();
+			Debug.todoMsg("Give 3 cards to the next player");
+			setStartingPlayer();
+			while(players.get(0).getHand().size() > 0) {
+				playRound();
+			}
 		}
+		
+		displayCollectedCards();
 	}
 
+	/* ------------------------ Reset Deck Function ------------------------ */
 	public void resetDeck() {
 		Debug.place();
 		deck = new HeartsDeck();
 		deck.shuffle();
 	}
 
+	/* ------------------------ Deal Deck Function ------------------------- */
 	public void dealDeck() {
 		Debug.place();
 		int cardsPerPlayer = deck.getDeckSize() / players.size();
@@ -61,27 +62,27 @@ public class HeartsGame {
 		}
 	}
 
-	/** Set who is the starting player */
+	/* ------------------- Set Starting Player Function -------------------- */
 	private void setStartingPlayer() {
 		Debug.place();
-		rotatePlayerList(searchStartingIndex());
-	}
 
-	/** Search for the index of the player who has the "2 of Clubs" */
-	private int searchStartingIndex() {
-		Debug.place();
+		int startIndex = -1;
+
 		for (int i = 0; i < players.size(); i++) {
 			Player<HeartsCard> player = players.get(i);
 			for (HeartsCard card : player.getHand().getCards()) {
 				if (card.equals(Rank.TWO, Suit.CLUBS)) {
-					return i;
+					startIndex = i;
+					break;
 				}
 			}
+			if (startIndex != -1) break;
 		}
-		return -1;
+
+		rotatePlayerList(startIndex);
 	}
 
-	/** Rotate the players list given the index of the starting player */
+	/* -------------------- Rotate Player List Function -------------------- */
 	private void rotatePlayerList(int startIndex) {
 		if (startIndex != -1) {
 			System.out.println("Starting player set: Player "
@@ -93,20 +94,24 @@ public class HeartsGame {
 		}
 	}
 
-	/* --------------------------------------------------------------------- */
-	public void playRound() {
-		Debug.print("Round number: " + roundNumber);
-		for (int i = 0; i < players.size(); i++) {
-			Player<HeartsCard> player = players.get(i);
-			player.getHand().remove(0);
-			Debug.print("Player " + player.getName() + " now has " + player.getHand().size() + " cards.");
-		}
-		roundNumber++;
+	/* ------------------------ Play Round Function ------------------------ */
+	private void playRound() {
+		HeartsRound round = new HeartsRound(players, roundNumber);
+        int winnerIndex = round.play();
+        rotatePlayerList(winnerIndex);
+        roundNumber++;
 	}
+
+	/* ----------------- Display Collected Cards Function ------------------ */
+	private void displayCollectedCards() {
+		for (HeartsPlayer player : players) {
+			Debug.print("Player " + player.getName() + " " + player.getCollectedCards().display());
+		}
+	}	
 
 	/* --------------------- Is Game Finished Function --------------------- */
 	public boolean isGameFinished() {
-		for (int p = 0; p < numPlayers; p++) {
+		for (int p = 0; p < players.size(); p++) {
 			if (players.get(p).getPoints() >= MAX_POINTS) {
 				calculateScores();
 				return true;
@@ -117,6 +122,6 @@ public class HeartsGame {
 
 	/* --------------------- Calculate Score Function ---------------------- */
 	public void calculateScores() {
-		// Calculate scores based on Hearts rules
+		// TODO
 	}
 }

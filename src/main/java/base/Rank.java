@@ -6,23 +6,17 @@ public enum Rank {
 	JACK, QUEEN, KING;
 
 	public String display() {
-		int out;
-
 		switch (this) {
 			case ACE:
-				return " A";
+				return "A";
 			case JACK:
-				return " J";
+				return "J";
 			case QUEEN:
-				return " Q";
+				return "Q";
 			case KING:
-				return " K";
-			case TEN:
-				out = ordinal() + 1;
-				return "" + out;
+				return "K";
 			default:
-				out = ordinal() + 1;
-				return " " + out;
+				return "" + (ordinal() + 1);
 		}
 	}
 }
